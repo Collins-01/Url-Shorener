@@ -1,4 +1,4 @@
-import express, {Application, NextFunction, Request, Response, response} from 'express';
+import express, {Application, Request, Response} from 'express';
 import http from 'http';
 import bodyParser from 'body-parser'
 import shortid from 'shortid';
@@ -48,7 +48,7 @@ app.get('/ping', (req, res) => {
 
 
 
-app.post('/shorten', async (req, res) => {
+app.post('/shorten', async (req:Request, res:Response) => {
    try {
     const { longUrl } = req.body;
   
@@ -69,14 +69,14 @@ app.post('/shorten', async (req, res) => {
     res.status(201).json({ shortUrl });
    } catch (error) {
         console.log(`Failed to generate url::: ${error}`);
-        return response.status(500).json({
+        return res.status(500).json({
             message: `Failed to generate url`,
             error: error,
         })
    }
   });
 
-app.get('/:shortUrl', async (req, res) => {
+app.get('/:shortUrl', async (req:Request, res:Response) => {
   try {
     const { shortUrl } = req.params;
     // console.log(shortUrl);
